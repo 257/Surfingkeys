@@ -22,40 +22,57 @@ unmap('<Ctrl-i>');
 // set theme
 settings.theme = `
 .sk_theme {
-    font-family: Input Sans Condensed, Charcoal, sans-serif;
-    font-size: 10pt;
-    background: #24272e;
-    color: #abb2bf;
+	font-family: fixed !important;
+	font-size: 100% !important;
+	background: #24272e;
+	color: #abb2bf;
 }
 .sk_theme tbody {
-    color: #fff;
-}
-.sk_theme input {
-    color: #d0d0d0;
+	color: #fff;
 }
 .sk_theme .url {
-    color: #61afef;
+	color: #61afef;
 }
 .sk_theme .annotation {
-    color: #56b6c2;
+	color: #56b6c2;
 }
 .sk_theme .omnibar_highlight {
-    color: #528bff;
+	color: #528bff;
 }
 .sk_theme .omnibar_timestamp {
-    color: #e5c07b;
+	color: #e5c07b;
 }
 .sk_theme .omnibar_visitcount {
-    color: #98c379;
+	color: #98c379;
 }
-.sk_theme #sk_omnibarSearchResult ul li:nth-child(odd) {
-    background: #303030;
+.sk_theme #sk_omnibarSearchResult>ul>li:nth-child(odd) {
+	background: #303030;
 }
-.sk_theme #sk_omnibarSearchResult ul li.focused {
-    background: #3e4452;
+.sk_theme #sk_omnibarSearchResult>ul>li.focused {
+	background: #3e4452;
 }
+.sk_theme input {
+    display: inline-block;
+    flex: 1;
+    color: #d0d0d0;
+    font-family: fixed !important;
+    font-size: 100% !important;
+    letter-spacing: normal !important;
+    margin-bottom: 0;
+    padding: 0px 0px 0px 0.5rem;
+    background-color: #000;
+    border-style: none;
+    outline: none;
+}
+#sk_omnibarSearchArea .prompt, #sk_omnibarSearchArea .resultPage {
+    display: inline-block;
+    font-family: fixed !important;
+    font-size: 100% !important;
+    width: auto;
+}
+
 #sk_status, #sk_find {
-    font-size: 20pt;
+	font-size: 100% !important;
 }`;
 // click `Save` button to make above settings to take effect.</template>
         <template id="templateProxyPair">

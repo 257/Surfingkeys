@@ -676,26 +676,30 @@ mapkey(';db', '#14Remove bookmark for current page', function() {
     RUNTIME('removeBookmark');
 });
 
-addSearchAliasX('g', 'google', 'https://www.google.com/search?q=', 's', 'https://www.google.com/complete/search?client=chrome-omni&gs_ri=chrome-ext&oit=1&cp=1&pgcl=7&q=', function(response) {
-    var res = JSON.parse(response.text);
-    return res[1];
-});
+addSearchAliasX('g', 'google',
+        "https://www.google.com/search?q=",
+        "s",
+        "https://www.google.com/complete/search?",
+        "client=chrome-omni&gs_ri=chrome-ext&oit=1&cp=1&pgcl=7&q=",
+        function(response) {
+                var res = JSON.parse(response.text);
+                return res[1];
+        }
+);
 addSearchAliasX('d', 'duckduckgo', 'https://duckduckgo.com/?q=', 's', 'https://duckduckgo.com/ac/?q=', function(response) {
     var res = JSON.parse(response.text);
     return res.map(function(r){
         return r.phrase;
     });
 });
-addSearchAliasX('b', 'baidu', 'https://www.baidu.com/s?wd=', 's', 'http://suggestion.baidu.com/su?cb=&wd=', function(response) {
-    var res = response.text.match(/,s:\[("[^\]]+")]}/);
-    return res ? res[1].replace(/"/g, '').split(",") : [];
-});
-addSearchAliasX('e', 'wikipedia', 'https://en.wikipedia.org/wiki/', 's', 'https://en.wikipedia.org/w/api.php?action=opensearch&format=json&formatversion=2&namespace=0&limit=40&search=', function(response) {
-    return JSON.parse(response.text)[1];
-});
-addSearchAliasX('w', 'bing', 'http://global.bing.com/search?setmkt=en-us&setlang=en-us&q=', 's', 'http://api.bing.com/osjson.aspx?query=', function(response) {
+addSearchAliasX('ld', 'luckyduck', 'https://duckduckgo.com/?q=', 's', 'https://duckduckgo.com/ac/?q=\\', function(response) {
     var res = JSON.parse(response.text);
-    return res[1];
+    return res.map(function(r){
+        return r.phrase;
+    });
+});
+addSearchAliasX('w', 'wikipedia', 'https://en.wikipedia.org/wiki/', 's', 'https://en.wikipedia.org/w/api.php?action=opensearch&format=json&formatversion=2&namespace=0&limit=40&search=', function(response) {
+    return JSON.parse(response.text)[1];
 });
 addSearchAliasX('s', 'stackoverflow', 'http://stackoverflow.com/search?q=');
 addSearchAliasX('h', 'github', 'https://github.com/search?q=', 's', 'https://api.github.com/search/repositories?order=desc&q=', function(response) {
@@ -707,12 +711,154 @@ addSearchAliasX('h', 'github', 'https://github.com/search?q=', 's', 'https://api
         };
     }) : [];
 });
-addSearchAliasX('y', 'youtube', 'https://www.youtube.com/results?search_query=', 's',
-'https://clients1.google.com/complete/search?client=youtube&ds=yt&callback=cb&q=', function(response) {
-    var res = JSON.parse(response.text.substr(9, response.text.length-10));
-    return res[1].map(function(d) {
-        return d[0];
-    });
+addSearchAliasX('ut', 'youtube', 'https://www.youtube.com./results?search_query=', 's',
+                'https://clients1.google.com/complete/search?client=youtube&ds=yt&callback=cb&q=',
+                function(response) {
+                        var res = JSON.parse(response.text.substr(9, response.text.length-10));
+                        return res[1].map(function(d) { return d[0]; });
 });
+addSearchAliasX('utm', 'utmusic', 'https://music.youtube.com/results?search_query=', 's',
+                'https://clients1.google.com/complete/search?client=youtube&ds=yt&callback=cb&q=',
+                function(response) {
+                        var res = JSON.parse(response.text.substr(9, response.text.length-10));
+                        return res[1].map(function(d) { return d[0]; });
+});
+addSearchAlias("l", "libgen",
+               "http://libgen.is/" +
+               "search.php?lg_topic=libgen&open=0&view=simple&res=25&phrase=1&" +
+               "sort=extension&sortmode=ASC&" +
+               "column=def&req=");
+addSearchAlias("wg", "wikipedia",
+               "https://www.google.com/" +
+               "search?sitesearch=en.wikipedia.org&domains=en.wikipedia.org&gl=uk&q=");
+addSearchAlias("wl", "wikipedia-lucky",
+               "http://www.google.com/" +
+               "search?sitesearch=en.wikipedia.org&domains=en.wikipedia.org&" +
+               "btnI=I%27m+feeling+lucky&iflsig=" +
+               "AAP1E1EAAAAAXfzlgK7CxK9q4sTqIoon9EhoOyF0b1Tx&gl=uk&q=");
+addSearchAlias("wcg", "wikichip",
+               "https://www.google.com/" +
+               "search?sitesearch=wikichip.org&domains=wikichip.org&gl=uk&q=");
+addSearchAlias("wcl", "wikichip-lucky",
+               "http://www.google.com/" +
+               "search?sitesearch=en.wikichip.org&domains=en.wikichip.org&btnI=" +
+               "I%27m+feeling+lucky&iflsig=" +
+               "AAP1E1EAAAAAXfzlgK7CxK9q4sTqIoon9EhoOyF0b1Tx&gl=uk&q=");
+addSearchAlias("lip", "linuxip",
+               "https://www.google.com/" +
+               "search?sitesearch=linux-ip.net&domains=linux-ip.net&q=");
+addSearchAlias("plr", "policyrouting",
+               "https://www.google.com/" +
+               "search?sitesearch=policyrouting.org&domains=policyrouting.org&q=");
+addSearchAlias("cfaq", "cfaq",
+               "https://www.google.com/search?sitesearch=c-faq.com&domains=c-faq.com&q=");
+addSearchAlias("pw", "pw",
+               "http://www.google.com/" +
+               "search?sitesearch=proofwiki.org&domains=proofwiki.org&btnI=I%27m+feeling+" +
+               "lucky&iflsig=AAP1E1EAAAAAXfzlgK7CxK9q4sTqIoon9EhoOyF0b1Tx&q=");
+addSearchAlias("pwg", "pwg",
+               "http://www.google.com/"+
+               "search?sitesearch=proofwiki.org&domains=proofwiki.org&q=");
+addSearchAlias("subw", "subwiki",
+               "http://www.google.com/" +
+               "search?sitesearch=subwiki.org&domains=subwiki.org&gl=uk&q=");
+addSearchAlias("subwl", "subwiki-lucky",
+               "http://www.google.com/" +
+               "search?sitesearch=subwiki.org&domains=subwiki.org&btnI=I%27m+feeling+" +
+               "lucky&iflsig=AAP1E1EAAAAAXfzlgK7CxK9q4sTqIoon9EhoOyF0b1Tx&gl=uk&q=");
+addSearchAlias("dg", "dg", "http://www.google.com/search?tbs=dfn%3a1&gl=uk&q=");
+addSearchAlias("ld", "LAROUSSEdict",
+               "https://www.larousse.fr/dictionnaires/francais/{0}");
 
+addSearchAlias("lc", "LAROUSSEconj",
+               "http://www.larousse.fr/conjugaison/francais/{0}");
+addSearchAlias("ls", "LAROUSSEsynm",
+               "http://www.larousse.fr/synonyme/francais/{0}");
+addSearchAlias("cn", "laconjugasion.net",
+               "http://www.laconjugaison.net/conjugaison/{0}/negation");
+addSearchAlias("f", "f",
+        "https://www.google.com/" +
+        "search?hl=fr&gl=fr&rl=lang_fr&cr=countryfr&q=&exactterms=");
+addSearchAlias("fr", "fr",
+        "https://cse.google.com/" +
+        "cse?cx=007772845088504728835:yhm18-dsenq&hl=fr&gl=fr&lr=lang_" +
+        "fr&cr=countryfr&q=");
+addSearchAlias("frl", "frl",
+        "https://cse.google.com/" +
+        "cse?cx=007772845088504728835:yhm18-dsenq&hl=fr&gl=fr&lr=lang_" +
+        "fr&cr=countryfr&btnI=I%27m+feeling+lucky&iflsig=" +
+        "AAP1E1EAAAAAXfzlgK7CxK9q4sTqIoon9EhoOyF0b1Tx&q=");
+addSearchAlias("gf", "google-fr",
+        "https://www.google.com/" +
+        "search?q=intext:{0}&hl=fr&gl=fr&lr=lang_fr&cr=countryfr");
+addSearchAlias("resrvod", "reservo-dict",
+        "http://dictionnaire.reverso.net/francais-definition/");
+addSearchAlias("reservot", "reservo-translate",
+        "http://dictionnaire.reverso.net/francais-anglais/");
+addSearchAlias("d", "dict-en",
+        "https://www.google.com/search?&q=define&q={0}&gl=uk");
+addSearchAlias("nux", "nux",
+        "http://sensmotdire.gnunux.info/:{0}.html");
+addSearchAlias("synof", "synonyms-fr",
+        "http://www.synonyms-fr.com/synonym.php?&submit.x=0&submit.y=0&word=");
+addSearchAlias("ox", "oxfdd",
+        "http://www.oxforddictionaries.com/us/definition/english/");
+addSearchAlias("oxth", "thesaurus-oxford",
+        "http://www.oxforddictionaries.com/us/definition/english-thesaurus/");
+addSearchAlias("m", "m",
+        "https://www.google.ca/maps/search/");
+addSearchAlias("e", "etymonline",
+        "http://www.etymonline.com/index.php?allowed_in_frame=0&search=");
+addSearchAlias("lwn", "lwn",
+        "https://www.google.com/search?" +
+        "sitesearch=lwn.net&" +
+        "domains=lwn.net&" +
+        "gl=uk&q=");
+addSearchAlias("pl", "plato",
+        "https://www.google.com/" +
+        "search?sitesearch=plato.stanford.edu&domains=plato.stanford.edu&gl=uk&q=");
+addSearchAlias("pll", "plato-lucky",
+        "https://www.google.com/" +
+        "search?sitesearch=plato.stanford.edu&domains=plato.stanford." +
+        "edu&gl=uk&btnI=I%27m+feeling+lucky&q=");
+addSearchAlias("hn", "hackernew",
+        "https://www.google.com/" +
+        "search?sitesearch=news.ycombinator.com&domains=news.ycombinator.com" +
+        "&gl=uk&q=");
+addSearchAlias("bbc", "bbc", "https://www.bbc.co.uk/programmes/{0}");
+addSearchAlias("ocw", "ocw",
+        "https://www.google.com/search?" +
+        "sitesearch=ocw.mit.edu&domains=ocw.mit.edu&" +
+        "btnI=I%27m+feeling+lucky&iflsig=" +
+        "AAP1E1EAAAAAXfzlgK7CxK9q4sTqIoon9EhoOyF0b1Tx&gl=uk&q=");
+        addSearchAlias("ocwg", "ocwg",
+        "https://www.google.com/" +
+        "search?sitesearch=ocw.mit.edu&domains=ocw.mit.edu&gl=uk&q=");
+addSearchAlias("gcp", "gcp",
+        "https://www.google.com/search?" +
+        "sitesearch=cloud.google.com/compute/docs" +
+        "&domains=cloud.google.com/compute/docs" +
+        "&btnI=I%27m+feeling+lucky" +
+        "&iflsig=AAP1E1EAAAAAXfzlgK7CxK9q4sTqIoon9EhoOyF0b1Tx&gl=uk&q=");
+addSearchAlias("gcpg", "gcpg",
+        "https://www.google.com/search?" +
+        "sitesearch=cloud.google.com/compute/docs" +
+        "&domains=cloud.google.com/compute/docs" +
+        "&gl=uk&q=");
+addSearchAlias("aws", "aws",
+        "https://www.google.com/search?" +
+        "sitesearch=docs.aws.amazon.com" +
+        "&domains=docs.aws.amazon.com" +
+        "&btnI=I%27m+feeling+lucky" +
+        "&iflsig=AAP1E1EAAAAAXfzlgK7CxK9q4sTqIoon9EhoOyF0b1Tx&gl=uk&q=");
+addSearchAlias("awsg", "awsg",
+        "https://www.google.com/search?" +
+        "sitesearch=docs.aws.amazon.com" +
+        "&domains=docs.aws.amazon.com" +
+        "&gl=uk&q=");
+addSearchAlias("py", "py",
+        "https://www.google.com/search?" +
+        "sitesearch=docs.python.org" +
+        "&domains=docs.python.org" +
+        "&gl=uk&q=");
 }

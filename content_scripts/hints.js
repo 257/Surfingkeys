@@ -584,6 +584,7 @@ div.hint-scrollable {
         return _cssSelector;
     };
 
+    self.numericHints = true;
     self.create = function(cssSelector, onHintKey, attrs) {
         if (self.numericHints) {
             self.characters = "1234567890";
@@ -677,6 +678,21 @@ div.hint-scrollable {
             _styleForClick = css.replace(/\bdiv\b/g, "div");
         }
     };
+    self.style("position: absolute; " +
+               "color: #FEFEFE !important; " +
+                "background: initial; " +
+                "background-color: rgba(0,0,0,0.20); " +
+                "border: solid 1px #ccc; " +
+                "border-radius: 2px !important; " +
+                "padding: 2px !important; " +
+                "font-family:  'United Sans Reg' !important; " +
+                "font-size: 12.5px !important; " +
+                "font-weight: 500 !important; " +
+                "text-transform: uppercase !important; " +
+                "display: inline-block !important; " +
+                "vertical-align: middle !important; " +
+                "text-align: center !important; " +
+                "box-shadow: 2px 2px 1px rgba(0,0,0,0.99) !important;");
 
     self.feedkeys = function(keys) {
         setTimeout(function() {
